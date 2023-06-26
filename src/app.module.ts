@@ -15,6 +15,9 @@ import { UsersModule } from './users/users.module';
       password: 'test',
       database: 'nest_sequelize',
       models: [User],
+      // autoLoadModels: true, //if we don't have autoLoadModels set to true, no synchronization occurs and we have to manually create tables/migrations
+      //synchronize automatically occurs when autoLoadModels is set to true (line 142 and 154 of sequelize-core.module.ts from @nestjs/sequelize)
+      // synchronize: true,
     }),
     UsersModule,
   ],
