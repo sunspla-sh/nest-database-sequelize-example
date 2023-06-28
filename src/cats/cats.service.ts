@@ -8,12 +8,20 @@ import { CreateCatArrayDto } from './create-cat-array.dto';
 @Injectable()
 export class CatsService {
   constructor(
-    @InjectModel(Cat) private catsModel: typeof Cat,
+    @InjectModel(Cat) private catModel: typeof Cat,
     private sequelize: Sequelize,
   ) {}
 
   findAll(): Promise<Cat[]> {
-    return this.catsModel.findAll();
+    return this.catModel.findAll();
+  }
+
+  findOne(id: number): Promise<Cat> {
+    return this.catModel.findOne({
+      where: {
+        id,
+      },
+    });
   }
 
   async createMany(createCatArrayDto: CreateCatArrayDto): Promise<void> {
@@ -21,7 +29,7 @@ export class CatsService {
       const catsArray = createCatArrayDto.action;
       await this.sequelize.transaction(async (transaction) => {
         for (let i = 0; i < catsArray.length; i++) {
-          await this.catsModel.create(instanceToPlain(catsArray[i]), {
+          await this.catModel.create(instanceToPlain(catsArray[i]), {
             transaction,
           });
         }
@@ -29,5 +37,10 @@ export class CatsService {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  async remove(id: number): Promise<void> {
+    const cat = await this.findOne(id);
+    await cat.destroy();
   }
 }
