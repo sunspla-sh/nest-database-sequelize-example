@@ -6,5 +6,5 @@ export class Cat extends Model {
   name: string;
 
   @Column
-  age: string;
+  age: number;
 }

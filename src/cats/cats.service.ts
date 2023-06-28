@@ -41,6 +41,8 @@ export class CatsService {
 
   async remove(id: number): Promise<void> {
     const cat = await this.findOne(id);
-    await cat.destroy();
+    if (cat) {
+      await cat.destroy();
+    }
   }
 }

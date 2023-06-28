@@ -1,9 +1,11 @@
-import { Length } from 'class-validator';
+import { Length, IsInt, Max, Min } from 'class-validator';
 
 export class CreateCatDto {
   @Length(1, 64)
   name: string;
 
-  @Length(1, 64)
-  age: string;
+  @IsInt()
+  @Max(20)
+  @Min(0)
+  age: number;
 }
