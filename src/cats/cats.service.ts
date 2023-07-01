@@ -25,18 +25,15 @@ export class CatsService {
   }
 
   async createMany(createCatArrayDto: CreateCatArrayDto): Promise<void> {
-    try {
-      const catsArray = createCatArrayDto.action;
-      await this.sequelize.transaction(async (transaction) => {
-        for (let i = 0; i < catsArray.length; i++) {
-          await this.catModel.create(instanceToPlain(catsArray[i]), {
-            transaction,
-          });
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    const catsArray = createCatArrayDto.action;
+    // will automatically commit if promise chain resolves successfully otherwise will automatically rollback if any promises reject
+    await this.sequelize.transaction(async (transaction) => {
+      for (let i = 0; i < catsArray.length; i++) {
+        await this.catModel.create(instanceToPlain(catsArray[i]), {
+          transaction,
+        });
+      }
+    });
   }
 
   async remove(id: number): Promise<void> {

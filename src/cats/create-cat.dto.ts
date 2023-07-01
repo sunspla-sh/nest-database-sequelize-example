@@ -9,3 +9,5 @@ export class CreateCatDto {
   @Min(0)
   age: number;
 }
+
+export const createCatDtoTypeFunction = () => CreateCatDto;
