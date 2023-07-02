@@ -8,6 +8,7 @@ export class CreateCatDto {
   @Max(20)
   @Min(0)
   age: number;
-}
 
-export const createCatDtoTypeFunction = () => CreateCatDto;
+  @IsInt()
+  userId: number;
+}

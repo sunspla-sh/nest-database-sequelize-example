@@ -3,13 +3,14 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.model';
 import { CreateUserDto } from './create-user.dto';
 import { instanceToPlain } from 'class-transformer';
+import { Cat } from '../cats/cat.model';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User) private userModel: typeof User) {}
 
   findAll(): Promise<User[]> {
-    return this.userModel.findAll();
+    return this.userModel.findAll({ include: Cat });
   }
 
   create(createUserDto: CreateUserDto): Promise<User> {
@@ -22,6 +23,7 @@ export class UsersService {
       where: {
         id,
       },
+      include: Cat,
     });
   }
 

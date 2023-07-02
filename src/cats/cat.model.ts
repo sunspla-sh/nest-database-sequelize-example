@@ -1,4 +1,11 @@
-import { Model, Table, Column } from 'sequelize-typescript';
+import {
+  Model,
+  Table,
+  Column,
+  ForeignKey,
+  BelongsTo,
+} from 'sequelize-typescript';
+import { User } from '../users/user.model';
 
 @Table
 export class Cat extends Model {
@@ -7,4 +14,11 @@ export class Cat extends Model {
 
   @Column
   age: number;
+
+  @ForeignKey(() => User)
+  @Column
+  userId: number;
+
+  @BelongsTo(() => User)
+  user: User;
 }

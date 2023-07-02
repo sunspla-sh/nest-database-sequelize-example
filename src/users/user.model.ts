@@ -1,4 +1,5 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, Model, Table, HasMany } from 'sequelize-typescript';
+import { Cat } from '../cats/cat.model';
 
 @Table
 export class User extends Model {
@@ -10,4 +11,7 @@ export class User extends Model {
 
   @Column({ defaultValue: true })
   isActive: boolean;
+
+  @HasMany(() => Cat)
+  cats: Cat[];
 }
